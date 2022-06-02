@@ -40,6 +40,7 @@ resource "azurerm_postgresql_flexible_server" "main" {
   resource_group_name    = azurerm_resource_group.main.name
   location               = var.vnet.specs.azure.region
   version                = var.postgres_version
+  backup_retention_days  = var.backup_retention_days
   delegated_subnet_id    = local.subnet_id
   private_dns_zone_id    = local.private_dns_zone_id
   administrator_login    = var.username

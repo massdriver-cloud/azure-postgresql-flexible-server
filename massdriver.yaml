@@ -88,6 +88,7 @@ params:
       title: Backup Retention
       description: How many days to retain PostgreSQL database backups (minimum of 7, maximum of 35).
       type: integer
+      default: 7
       minimum: 7
       maximum: 35
     high_availability:
