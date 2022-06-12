@@ -20,9 +20,6 @@ locals {
   sku = lookup(local.size_map, var.size, "")
 
   storage_mb = var.storage_gb * 1024
-
-  subnet_id           = var.vnet.data.infrastructure.delegated_subnets["Microsoft.DBforPostgreSQL/flexibleServers"].subnet_id
-  private_dns_zone_id = var.vnet.data.infrastructure.delegated_subnets["Microsoft.DBforPostgreSQL/flexibleServers"].private_dns_zone_id
 }
 
 resource "random_password" "master_password" {
@@ -35,14 +32,26 @@ resource "azurerm_resource_group" "main" {
   location = var.vnet.specs.azure.region
 }
 
+resource "azurerm_private_dns_zone" "main" {
+  name                = "${var.md_metadata.name_prefix}-dns.postgres.database.azure.com"
+  resource_group_name = azurerm_resource_group.main.name
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "main" {
+  name                  = var.md_metadata.name_prefix
+  resource_group_name   = azurerm_resource_group.main.name
+  private_dns_zone_name = azurerm_private_dns_zone.main.name
+  virtual_network_id    = var.vnet.data.infrastructure.id
+}
+
 resource "azurerm_postgresql_flexible_server" "main" {
   name                   = var.md_metadata.name_prefix
   resource_group_name    = azurerm_resource_group.main.name
   location               = var.vnet.specs.azure.region
   version                = var.postgres_version
   backup_retention_days  = var.backup_retention_days
-  delegated_subnet_id    = local.subnet_id
-  private_dns_zone_id    = local.private_dns_zone_id
+  delegated_subnet_id    = azurerm_subnet.main.id
+  private_dns_zone_id    = azurerm_private_dns_zone.main.id
   administrator_login    = var.username
   administrator_password = random_password.master_password.result
 
@@ -61,4 +70,8 @@ resource "azurerm_postgresql_flexible_server" "main" {
 
   storage_mb = local.storage_mb
   sku_name   = local.sku
+
+  depends_on = [
+    azurerm_private_dns_zone_virtual_network_link.main
+  ]
 }
