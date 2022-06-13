@@ -84,18 +84,29 @@ params:
       title: Storage (GB)
       description: The amount of storage capacity available to your Azure Database for PostgreSQL server in GB.
       type: integer
-      enum:
-        - 32
-        - 64
-        - 128
-        - 256
-        - 512
-        - 1024
-        - 2048
-        - 4096
-        - 8192
-        - 16384
-        - 32768
+      oneOf:
+        - title: 32GB
+          const: 32
+        - title: 64GB
+          const: 64
+        - title: 128GB
+          const: 128
+        - title: 256GB
+          const: 256
+        - title: 512GB
+          const: 512
+        - title: 1TB
+          const: 1024
+        - title: 2TB
+          const: 2048
+        - title: 4TB
+          const: 4096
+        - title: 8TB
+          const: 8192
+        - title: 16TB
+          const: 16384
+        - title: 32TB
+          const: 32768
     cidr:
       title: Subnet CIDR
       type: string
