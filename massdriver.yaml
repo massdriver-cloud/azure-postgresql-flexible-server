@@ -14,26 +14,26 @@ params:
     - __name: "Development"
       postgres_version: "13"
       size: "B2s (2 vCores, 4 GiB memory, 1280 max iops)"
-      storage_gb: 32
+      storage_mb: 32
       backup_retention_days: 7
       high_availability: false
     - __name: "Production (Small / Medium-size)"
       postgres_version: "13"
       size: "D16s (16 vCores, 64 GiB memory, 18000 max iops)"
-      storage_gb: 256
+      storage_mb: 256
       backup_retention_days: 30
       high_availability: true
     - __name: "Production (Large-size)"
       postgres_version: "13"
       size: "E32s (32 vCores, 256 GiB memory, 18000 max iops)"
-      storage_gb: 512
+      storage_mb: 512
       backup_retention_days: 30
       high_availability: true
   required:
     - postgres_version
     - username
     - size
-    - storage_gb
+    - storage_mb
     - cidr
   properties:
     postgres_version:
@@ -80,33 +80,33 @@ params:
         - E32s (32 vCores, 256 GiB memory, 18000 max iops)
         - E48s (48 vCores, 384 GiB memory, 18000 max iops)
         - E64s (64 vCores, 432 GiB memory, 18000 max iops)
-    storage_gb:
-      title: Storage (GB)
-      description: The amount of storage capacity available to your Azure Database for PostgreSQL server in GB.
+    storage_mb:
+      title: Storage
+      description: The amount of storage capacity available to your Azure Database for PostgreSQL server.
       type: integer
       oneOf:
         - title: 32GB
-          const: 32
-        - title: 64GB
-          const: 64
-        - title: 128GB
-          const: 128
-        - title: 256GB
-          const: 256
-        - title: 512GB
-          const: 512
-        - title: 1TB
-          const: 1024
-        - title: 2TB
-          const: 2048
-        - title: 4TB
-          const: 4096
-        - title: 8TB
-          const: 8192
-        - title: 16TB
-          const: 16384
-        - title: 32TB
           const: 32768
+        - title: 64GB
+          const: 65536
+        - title: 128GB
+          const: 131072
+        - title: 256GB
+          const: 262144
+        - title: 512GB
+          const: 524288
+        - title: 1TB
+          const: 1048576
+        - title: 2TB
+          const: 2097152
+        - title: 4TB
+          const: 4194304
+        - title: 8TB
+          const: 8388608
+        - title: 16TB
+          const: 16777216
+        - title: 32TB
+          const: 33554432
     cidr:
       title: Subnet CIDR
       type: string
@@ -149,7 +149,7 @@ ui:
     - postgres_version
     - tier
     - size
-    - storage_gb
+    - storage_mb
     - username
     - cidr
     - backup_retention_days
