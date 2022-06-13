@@ -18,8 +18,6 @@ locals {
     "E64s (64 vCores, 432 GiB memory, 18000 max iops)" = "MO_Standard_E64s_v3"
   }
   sku = lookup(local.size_map, var.size, "")
-
-  storage_mb = var.storage_gb * 1024
 }
 
 resource "random_password" "master_password" {
