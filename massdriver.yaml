@@ -82,10 +82,20 @@ params:
         - E64s (64 vCores, 432 GiB memory, 18000 max iops)
     storage_gb:
       title: Storage (GB)
-      description: The storage you provision is the amount of storage capacity available to your Azure Database for PostgreSQL server (minimum of 32 GB, maximum of 16384 GB).
-      minimum: 32
-      maximum: 16384
+      description: The amount of storage capacity available to your Azure Database for PostgreSQL server in GB.
       type: integer
+      enum:
+        - 32
+        - 64
+        - 128
+        - 256
+        - 512
+        - 1024
+        - 2048
+        - 4096
+        - 8192
+        - 16384
+        - 32768
     cidr:
       title: Subnet CIDR
       type: string
