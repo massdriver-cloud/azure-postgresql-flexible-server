@@ -13,26 +13,26 @@ params:
   examples:
     - __name: "Development"
       postgres_version: "13"
-      size: "B2s (2 vCores, 4 GiB memory, 1280 max iops)"
-      storage_mb: 32768
+      sku_name: B2s (2 vCores, 4 GiB memory, 1280 max iops)
+      storage_mb: 32
       backup_retention_days: 7
       high_availability: false
     - __name: "Production (Small / Medium-size)"
       postgres_version: "13"
-      size: "D16s (16 vCores, 64 GiB memory, 18000 max iops)"
-      storage_mb: 262144
+      sku_name: D16s (16 vCores, 64 GiB memory, 18000 max iops)
+      storage_mb: 256
       backup_retention_days: 30
       high_availability: true
     - __name: "Production (Large-size)"
       postgres_version: "13"
-      size: "E32s (32 vCores, 256 GiB memory, 18000 max iops)"
-      storage_mb: 524288
+      sku_name: E32s (32 vCores, 256 GiB memory, 18000 max iops)
+      storage_mb: 512
       backup_retention_days: 30
       high_availability: true
   required:
     - postgres_version
     - username
-    - size
+    - sku_name
     - storage_mb
     - cidr
   properties:
@@ -59,27 +59,43 @@ params:
           - azure_pg_admin
           - guest
           - public
-    size:
-      title: Compute size
+    sku_name:
+      title: Compute SKU
       description: Select the amount of cores, memory, and iops you need for your workload (B = Burstable, D = General Purpose, E = Memory Optimized).
       type: string
-      enum:
-        - B1ms (1 vCore, 2 GiB memory, 640 max iops)
-        - B2s (2 vCores, 4 GiB memory, 1280 max iops)
-        - D2s (2 vCores, 8 GiB memory, 3200 max iops)
-        - D4s (4 vCores, 16 GiB memory, 6400 max iops)
-        - D8s (8 vCores, 32 GiB memory, 12800 max iops)
-        - D16s (16 vCores, 64 GiB memory, 18000 max iops)
-        - D32s (32 vCores, 128 GiB memory, 18000 max iops)
-        - D48s (48 vCores, 192 GiB memory, 18000 max iops)
-        - D64s (64 vCores, 256 GiB memory, 18000 max iops)
-        - E2s (2 vCores, 16 GiB memory, 3200 max iops)
-        - E4s (4 vCores, 32 GiB memory, 6400 max iops)
-        - E8s (8 vCores, 64 GiB memory, 12800 max iops)
-        - E16s (16 vCores, 128 GiB memory, 18000 max iops)
-        - E32s (32 vCores, 256 GiB memory, 18000 max iops)
-        - E48s (48 vCores, 384 GiB memory, 18000 max iops)
-        - E64s (64 vCores, 432 GiB memory, 18000 max iops)
+      oneOf:
+        - title: B1ms (1 vCore, 2 GiB memory, 640 max iops)
+          const: B_Standard_B1ms
+        - title: B2s (2 vCores, 4 GiB memory, 1280 max iops)
+          const: B_Standard_B2s
+        - title: D2s (2 vCores, 8 GiB memory, 3200 max iops)
+          const: GP_Standard_D2s_v3
+        - title: D4s (4 vCores, 16 GiB memory, 6400 max iops)
+          const: GP_Standard_D4s_v3
+        - title: D8s (8 vCores, 32 GiB memory, 12800 max iops)
+          const: GP_Standard_D8s_v3
+        - title: D16s (16 vCores, 64 GiB memory, 18000 max iops)
+          const: GP_Standard_D16s_v3
+        - title: D32s (32 vCores, 128 GiB memory, 18000 max iops)
+          const: GP_Standard_D32s_v3
+        - title: D48s (48 vCores, 192 GiB memory, 18000 max iops)
+          const: GP_Standard_D48s_v3
+        - title: D64s (64 vCores, 256 GiB memory, 18000 max iops)
+          const: GP_Standard_D64s_v3
+        - title: E2s (2 vCores, 16 GiB memory, 3200 max iops)
+          const: MO_Standard_E2s_v3
+        - title: E4s (4 vCores, 32 GiB memory, 6400 max iops)
+          const: MO_Standard_E4s_v3
+        - title: E8s (8 vCores, 64 GiB memory, 12800 max iops)
+          const: MO_Standard_E8s_v3
+        - title: E16s (16 vCores, 128 GiB memory, 18000 max iops)
+          const: MO_Standard_E16s_v3
+        - Etitle: 32s (32 vCores, 256 GiB memory, 18000 max iops)
+          const: MO_Standard_E32s_v3
+        - title: E48s (48 vCores, 384 GiB memory, 18000 max iops)
+          const: MO_Standard_E48s_v3
+        - title: E64s (64 vCores, 432 GiB memory, 18000 max iops)
+          const: MO_Standard_E64s_v3
     storage_mb:
       title: Storage
       description: The amount of storage capacity available to your Azure Database for PostgreSQL server.
@@ -147,8 +163,7 @@ artifacts:
 ui:
   ui:order:
     - postgres_version
-    - tier
-    - size
+    - sku_name
     - storage_mb
     - username
     - cidr
