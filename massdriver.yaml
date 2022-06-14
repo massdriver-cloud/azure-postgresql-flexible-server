@@ -90,7 +90,7 @@ params:
           const: MO_Standard_E8s_v3
         - title: E16s (16 vCores, 128 GiB memory, 18000 max iops)
           const: MO_Standard_E16s_v3
-        - Etitle: 32s (32 vCores, 256 GiB memory, 18000 max iops)
+        - title: E32s (32 vCores, 256 GiB memory, 18000 max iops)
           const: MO_Standard_E32s_v3
         - title: E48s (48 vCores, 384 GiB memory, 18000 max iops)
           const: MO_Standard_E48s_v3
