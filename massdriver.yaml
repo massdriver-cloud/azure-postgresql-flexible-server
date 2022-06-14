@@ -14,19 +14,19 @@ params:
     - __name: "Development"
       postgres_version: "13"
       size: "B2s (2 vCores, 4 GiB memory, 1280 max iops)"
-      storage_mb: "32GB"
+      storage_mb: 32768
       backup_retention_days: 7
       high_availability: false
     - __name: "Production (Small / Medium-size)"
       postgres_version: "13"
       size: "D16s (16 vCores, 64 GiB memory, 18000 max iops)"
-      storage_mb: "256GB"
+      storage_mb: 262144
       backup_retention_days: 30
       high_availability: true
     - __name: "Production (Large-size)"
       postgres_version: "13"
       size: "E32s (32 vCores, 256 GiB memory, 18000 max iops)"
-      storage_mb: "512GB"
+      storage_mb: 524288
       backup_retention_days: 30
       high_availability: true
   required:
