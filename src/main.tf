@@ -66,7 +66,7 @@ resource "azurerm_postgresql_flexible_server" "main" {
     ]
   }
 
-  storage_mb = local.storage_mb
+  storage_mb = var.storage_mb
   sku_name   = local.sku
 
   depends_on = [
