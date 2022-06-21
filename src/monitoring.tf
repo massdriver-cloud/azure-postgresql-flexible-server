@@ -21,7 +21,7 @@ module "alarm_channel" {
 }
 
 module "cpu_metric_alert" {
-  source                  = "github.com/massdriver-cloud/terraform-modules//azure-monitor-metrics-alarm?ref=aa08797"
+  source                  = "github.com/massdriver-cloud/terraform-modules//azure-monitor-metrics-alarm?ref=8997456"
   scopes                  = [azurerm_postgresql_flexible_server.main.id]
   resource_group_name     = azurerm_resource_group.main.name
   monitor_action_group_id = module.alarm_channel.id
@@ -33,8 +33,9 @@ module "cpu_metric_alert" {
     azurerm_postgresql_flexible_server.main
   ]
 
-  md_metadata = var.md_metadata
-  message     = "High CPU Usage"
+  md_metadata  = var.md_metadata
+  display_name = "CPU Usage"
+  message      = "High CPU Usage"
 
   alarm_name       = "${var.md_metadata.name_prefix}-highCPUUsage"
   operator         = local.metric_config.operator
@@ -45,7 +46,7 @@ module "cpu_metric_alert" {
 }
 
 module "memory_metric_alert" {
-  source                  = "github.com/massdriver-cloud/terraform-modules//azure-monitor-metrics-alarm?ref=aa08797"
+  source                  = "github.com/massdriver-cloud/terraform-modules//azure-monitor-metrics-alarm?ref=8997456"
   scopes                  = [azurerm_postgresql_flexible_server.main.id]
   resource_group_name     = azurerm_resource_group.main.name
   monitor_action_group_id = module.alarm_channel.id
@@ -57,8 +58,9 @@ module "memory_metric_alert" {
     azurerm_postgresql_flexible_server.main
   ]
 
-  md_metadata = var.md_metadata
-  message     = "High Memory Usage"
+  md_metadata  = var.md_metadata
+  display_name = "Memory Usage"
+  message      = "High Memory Usage"
 
   alarm_name       = "${var.md_metadata.name_prefix}-highMemoryUsage"
   operator         = local.metric_config.operator
@@ -69,7 +71,7 @@ module "memory_metric_alert" {
 }
 
 module "storage_metric_alert" {
-  source                  = "github.com/massdriver-cloud/terraform-modules//azure-monitor-metrics-alarm?ref=aa08797"
+  source                  = "github.com/massdriver-cloud/terraform-modules//azure-monitor-metrics-alarm?ref=8997456"
   scopes                  = [azurerm_postgresql_flexible_server.main.id]
   resource_group_name     = azurerm_resource_group.main.name
   monitor_action_group_id = module.alarm_channel.id
@@ -81,8 +83,9 @@ module "storage_metric_alert" {
     azurerm_postgresql_flexible_server.main
   ]
 
-  md_metadata = var.md_metadata
-  message     = "High Storage Usage"
+  md_metadata  = var.md_metadata
+  display_name = "Disk Usage"
+  message      = "High Storage Usage"
 
   alarm_name       = "${var.md_metadata.name_prefix}-highStorageUsage"
   operator         = local.metric_config.operator
