@@ -11,23 +11,15 @@ steps:
 
 params:
   examples:
-    - __name: "Development"
-      postgres_version: "13"
+    - __name: Development
       sku_name: B_Standard_B2s
       storage_mb: 32
-      backup_retention_days: 7
+      backup_retention_days: 3
       high_availability: false
-    - __name: "Production (Small / Medium-size)"
-      postgres_version: "13"
+    - __name: Production
       sku_name: GP_Standard_D2s_v3
       storage_mb: 256
-      backup_retention_days: 30
-      high_availability: true
-    - __name: "Production (Large-size)"
-      postgres_version: "13"
-      sku_name: MO_Standard_E2s_v3
-      storage_mb: 512
-      backup_retention_days: 30
+      backup_retention_days: 21
       high_availability: true
   required:
     - postgres_version
