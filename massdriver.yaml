@@ -30,7 +30,8 @@ params:
   properties:
     postgres_version:
       title: PostgreSQL version
-      description: The version of PostgreSQL to use. The version can be upgraded, but not downgraded.
+      description: The version of PostgreSQL to use. The version cannot be changed.
+      $md.immutable: true
       type: string
       default: "13"
       enum:
@@ -39,8 +40,9 @@ params:
         - "13"
     username:
       title: Username
-      description: The administrator login for the PostgreSQL Flexible Server. (Cannot be 'admin', 'root', 'administrator', 'username', 'azure_superuser', 'azure_pg_admin', 'guest', or 'public'.)
+      description: The administrator login for the PostgreSQL Flexible Server. Username cannot be changed after creation. (Username cannot be 'admin', 'root', 'administrator', 'username', 'azure_superuser', 'azure_pg_admin', 'guest', or 'public'.)
       type: string
+      $md.immutable: true
       not:
         enum:
           - admin
@@ -90,7 +92,7 @@ params:
           const: MO_Standard_E64s_v3
     storage_mb:
       title: Storage
-      description: The amount of storage capacity available to your Azure Database for PostgreSQL server.
+      description: The amount of storage capacity available to your Azure Database for PostgreSQL server. Storage size cannot be scaled down.
       type: integer
       oneOf:
         - title: 32GB
@@ -118,7 +120,7 @@ params:
     cidr:
       title: Subnet CIDR
       type: string
-      description: Specify a /28 CIDR range within your vnet to create subnet for the database
+      description: Specify a /28 CIDR range within your vnet to create subnet for the database. The subnet CIDR cannot be changed after creation.
       $md.immutable: true
       pattern: ^(?:10\.(?:[0-9]|[0-9]{2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|172\.(?:1[6-9]|2[0-9]|3[0-1])|192\.168)(?:\.(?:[0-9]|[0-9]{2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){2}\/28$
       message:
@@ -132,7 +134,7 @@ params:
       maximum: 35
     high_availability:
       title: Enable High Availability
-      description: Zone redundant high availability deploys a standby replica to a different zone for automatic failover in the event of an outage.
+      description: Zone redundant high availability deploys a standby replica to a different zone for automatic failover in the event of an outage. Burstable compute SKUs do not support high availability.
       type: boolean
       default: false
 
