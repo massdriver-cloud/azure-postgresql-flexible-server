@@ -5,10 +5,6 @@ ref: github.com/massdriver-cloud/azure-postgresql-flexible-server
 access: "public"
 type: bundle
 
-steps:
-  - path: src
-    provisioner: terraform
-
 params:
   examples:
     - __name: Development
@@ -159,3 +155,4 @@ ui:
     - cidr
     - backup_retention_days
     - high_availability
+    - "*"
