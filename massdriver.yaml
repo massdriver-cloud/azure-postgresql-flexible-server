@@ -8,126 +8,138 @@ type: bundle
 params:
   examples:
     - __name: Development
-      sku_name: GP_Standard_D2s_v3
-      storage_mb: 32768
-      backup_retention_days: 7
-      high_availability: false
+      database:
+        sku_name: GP_Standard_D2s_v3
+        storage_mb: 32768
+        high_availability: false
+      backup:
+        backup_retention_days: 7
     - __name: Production
-      sku_name: MO_Standard_E4s_v3
-      storage_mb: 262144
-      backup_retention_days: 30
-      high_availability: true
-  required:
-    - postgres_version
-    - username
-    - sku_name
-    - storage_mb
-    - cidr
+      database:
+        sku_name: MO_Standard_E4s_v3
+        storage_mb: 262144
+        high_availability: true
+      backup:
+        backup_retention_days: 30
   properties:
-    postgres_version:
-      title: PostgreSQL version
-      description: The version of PostgreSQL to use. The version cannot be changed.
-      $md.immutable: true
-      type: string
-      default: "13"
-      enum:
-        - "11"
-        - "12"
-        - "13"
-    username:
-      title: Username
-      description: The administrator login for the PostgreSQL Flexible Server. Username cannot be changed after creation. (Username cannot be 'admin', 'root', 'administrator', 'username', 'azure_superuser', 'azure_pg_admin', 'guest', or 'public'.)
-      type: string
-      $md.immutable: true
-      not:
-        enum:
-          - admin
-          - root
-          - administrator
-          - username
-          - azure_superuser
-          - azure_pg_admin
-          - guest
-          - public
-    sku_name:
-      title: Compute SKU
-      description: Select the amount of cores, memory, and iops you need for your workload (D = General Purpose, E = Memory Optimized).
-      type: string
-      oneOf:
-        - title: D2s (2 vCores, 8 GiB memory, 3200 max iops)
-          const: GP_Standard_D2s_v3
-        - title: D4s (4 vCores, 16 GiB memory, 6400 max iops)
-          const: GP_Standard_D4s_v3
-        - title: D8s (8 vCores, 32 GiB memory, 12800 max iops)
-          const: GP_Standard_D8s_v3
-        - title: D16s (16 vCores, 64 GiB memory, 18000 max iops)
-          const: GP_Standard_D16s_v3
-        - title: D32s (32 vCores, 128 GiB memory, 18000 max iops)
-          const: GP_Standard_D32s_v3
-        - title: D48s (48 vCores, 192 GiB memory, 18000 max iops)
-          const: GP_Standard_D48s_v3
-        - title: D64s (64 vCores, 256 GiB memory, 18000 max iops)
-          const: GP_Standard_D64s_v3
-        - title: E2s (2 vCores, 16 GiB memory, 3200 max iops)
-          const: MO_Standard_E2s_v3
-        - title: E4s (4 vCores, 32 GiB memory, 6400 max iops)
-          const: MO_Standard_E4s_v3
-        - title: E8s (8 vCores, 64 GiB memory, 12800 max iops)
-          const: MO_Standard_E8s_v3
-        - title: E16s (16 vCores, 128 GiB memory, 18000 max iops)
-          const: MO_Standard_E16s_v3
-        - title: E32s (32 vCores, 256 GiB memory, 18000 max iops)
-          const: MO_Standard_E32s_v3
-        - title: E48s (48 vCores, 384 GiB memory, 18000 max iops)
-          const: MO_Standard_E48s_v3
-        - title: E64s (64 vCores, 432 GiB memory, 18000 max iops)
-          const: MO_Standard_E64s_v3
-    storage_mb:
-      title: Storage
-      description: The amount of storage capacity available to your Azure Database for PostgreSQL server. Storage size cannot be scaled down.
-      type: integer
-      oneOf:
-        - title: 32GB
-          const: 32768
-        - title: 64GB
-          const: 65536
-        - title: 128GB
-          const: 131072
-        - title: 256GB
-          const: 262144
-        - title: 512GB
-          const: 524288
-        - title: 1TB
-          const: 1048576
-        - title: 2TB
-          const: 2097152
-        - title: 4TB
-          const: 4194304
-        - title: 8TB
-          const: 8388608
-        - title: 16TB
-          const: 16777216
-        - title: 32TB
-          const: 33554432
-    cidr:
-      title: Subnet CIDR
-      type: string
-      description: Specify a /28 CIDR range within your vnet to create subnet for the database. The subnet CIDR cannot be changed after creation.
-      $md.immutable: true
-      pattern: ^(?:10\.(?:[0-9]|[0-9]{2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|172\.(?:1[6-9]|2[0-9]|3[0-1])|192\.168)(?:\.(?:[0-9]|[0-9]{2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){2}\/28$
-      message:
-        pattern: "Must be a /28 range from within the VNet CIDR"
-    backup_retention_days:
-      title: Backup Retention
-      description: How many days to retain PostgreSQL database backups (minimum of 7, maximum of 35).
-      type: integer
-      default: 7
-      minimum: 7
-      maximum: 35
-    high_availability:
-      title: Enable High Availability (not available for North Central US)
-      type: boolean
-      default: false
+    database:
+      title: Database
+      type: object
+      required:
+        - postgres_version
+        - username
+        - sku_name
+        - storage_mb
+        - cidr
+      properties:
+        postgres_version:
+          title: PostgreSQL version
+          description: The version of PostgreSQL to use. The version cannot be changed.
+          $md.immutable: true
+          type: string
+          default: "13"
+          enum:
+            - "11"
+            - "12"
+            - "13"
+        username:
+          title: Username
+          description: The administrator login for the PostgreSQL Flexible Server. Username cannot be changed after creation. (Username cannot be 'admin', 'root', 'administrator', 'username', 'azure_superuser', 'azure_pg_admin', 'guest', or 'public'.)
+          type: string
+          $md.immutable: true
+          not:
+            enum:
+              - admin
+              - root
+              - administrator
+              - username
+              - azure_superuser
+              - azure_pg_admin
+              - guest
+              - public
+        sku_name:
+          title: Compute SKU
+          description: Select the amount of cores, memory, and iops you need for your workload (D = General Purpose, E = Memory Optimized).
+          type: string
+          oneOf:
+            - title: D2s (2 vCores, 8 GiB memory, 3200 max iops)
+              const: GP_Standard_D2s_v3
+            - title: D4s (4 vCores, 16 GiB memory, 6400 max iops)
+              const: GP_Standard_D4s_v3
+            - title: D8s (8 vCores, 32 GiB memory, 12800 max iops)
+              const: GP_Standard_D8s_v3
+            - title: D16s (16 vCores, 64 GiB memory, 18000 max iops)
+              const: GP_Standard_D16s_v3
+            - title: D32s (32 vCores, 128 GiB memory, 18000 max iops)
+              const: GP_Standard_D32s_v3
+            - title: D48s (48 vCores, 192 GiB memory, 18000 max iops)
+              const: GP_Standard_D48s_v3
+            - title: D64s (64 vCores, 256 GiB memory, 18000 max iops)
+              const: GP_Standard_D64s_v3
+            - title: E2s (2 vCores, 16 GiB memory, 3200 max iops)
+              const: MO_Standard_E2s_v3
+            - title: E4s (4 vCores, 32 GiB memory, 6400 max iops)
+              const: MO_Standard_E4s_v3
+            - title: E8s (8 vCores, 64 GiB memory, 12800 max iops)
+              const: MO_Standard_E8s_v3
+            - title: E16s (16 vCores, 128 GiB memory, 18000 max iops)
+              const: MO_Standard_E16s_v3
+            - title: E32s (32 vCores, 256 GiB memory, 18000 max iops)
+              const: MO_Standard_E32s_v3
+            - title: E48s (48 vCores, 384 GiB memory, 18000 max iops)
+              const: MO_Standard_E48s_v3
+            - title: E64s (64 vCores, 432 GiB memory, 18000 max iops)
+              const: MO_Standard_E64s_v3
+        storage_mb:
+          title: Storage
+          description: The amount of storage capacity available to your Azure Database for PostgreSQL server. Storage size cannot be scaled down.
+          type: integer
+          oneOf:
+            - title: 32GB
+              const: 32768
+            - title: 64GB
+              const: 65536
+            - title: 128GB
+              const: 131072
+            - title: 256GB
+              const: 262144
+            - title: 512GB
+              const: 524288
+            - title: 1TB
+              const: 1048576
+            - title: 2TB
+              const: 2097152
+            - title: 4TB
+              const: 4194304
+            - title: 8TB
+              const: 8388608
+            - title: 16TB
+              const: 16777216
+            - title: 32TB
+              const: 33554432
+        cidr:
+          title: Subnet CIDR
+          type: string
+          description: Specify a /28 CIDR range within your vnet to create subnet for the database. The subnet CIDR cannot be changed after creation.
+          $md.immutable: true
+          pattern: ^(?:10\.(?:[0-9]|[0-9]{2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|172\.(?:1[6-9]|2[0-9]|3[0-1])|192\.168)(?:\.(?:[0-9]|[0-9]{2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){2}\/28$
+          message:
+            pattern: "Must be a /28 range from within the VNet CIDR"
+        high_availability:
+          title: Enable High Availability (not available for North Central US)
+          type: boolean
+          default: false
+    backup:
+      title: Backup
+      type: object
+      properties:
+        backup_retention_days:
+          title: Backup Retention
+          description: How many days to retain PostgreSQL database backups (minimum of 7, maximum of 35).
+          type: integer
+          default: 7
+          minimum: 7
+          maximum: 35
 
 connections:
   required:
@@ -148,11 +160,19 @@ artifacts:
 
 ui:
   ui:order:
-    - postgres_version
-    - sku_name
-    - storage_mb
-    - username
-    - cidr
-    - backup_retention_days
-    - high_availability
+    - database
+    - backup
     - "*"
+  database:
+    ui:order:
+      - cidr
+      - postgres_version
+      - sku_name
+      - storage_mb
+      - username
+      - high_availability
+      - "*"
+  backup:
+    ui:order:
+      - backup_retention_days
+      - "*"
