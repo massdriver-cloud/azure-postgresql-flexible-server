@@ -5,11 +5,9 @@ locals {
     window_size = "PT5M"
   }
   metric_config = {
-    operator          = "GreaterThan"
-    aggregation       = "Average"
-    threshold_cpu     = 90
-    threshold_memory  = 90
-    threshold_storage = 90
+    operator    = "GreaterThan"
+    aggregation = "Average"
+    threshold   = 90
   }
 }
 
@@ -42,7 +40,7 @@ module "cpu_metric_alert" {
   metric_name      = "cpu_percent"
   metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
   aggregation      = local.metric_config.aggregation
-  threshold        = local.metric_config.threshold_cpu
+  threshold        = local.metric_config.threshold
 }
 
 module "memory_metric_alert" {
@@ -67,7 +65,7 @@ module "memory_metric_alert" {
   metric_name      = "memory_percent"
   metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
   aggregation      = local.metric_config.aggregation
-  threshold        = local.metric_config.threshold_memory
+  threshold        = local.metric_config.threshold
 }
 
 module "storage_metric_alert" {
@@ -92,5 +90,5 @@ module "storage_metric_alert" {
   metric_name      = "storage_percent"
   metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
   aggregation      = local.metric_config.aggregation
-  threshold        = local.metric_config.threshold_storage
+  threshold        = local.metric_config.threshold
 }
