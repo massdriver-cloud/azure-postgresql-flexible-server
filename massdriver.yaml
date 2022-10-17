@@ -21,6 +21,9 @@ params:
         high_availability: true
       backup:
         backup_retention_days: 30
+  required:
+    - database
+    - backup
   properties:
     database:
       title: Database
