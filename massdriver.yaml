@@ -140,6 +140,15 @@ params:
           default: 7
           minimum: 7
           maximum: 35
+    addons:
+      title: Add-ons
+      type: object
+      properties:
+        pgbouncer:
+          title: PgBouncer
+          description: PgBouncer is a connection pooler for PostgreSQL. It reduces the number of connections to the database, which can improve performance.
+          type: boolean
+          default: false
 
 connections:
   required:

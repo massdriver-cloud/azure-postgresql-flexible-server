@@ -8,7 +8,10 @@ locals {
     hostname = azurerm_postgresql_flexible_server.main.fqdn
     port     = 5432
   }
-  data_security = {}
+  data_security = {
+    role  = "admin"
+    scope = azurerm_postgresql_flexible_server.main.id
+  }
 }
 
 resource "massdriver_artifact" "authentication" {
