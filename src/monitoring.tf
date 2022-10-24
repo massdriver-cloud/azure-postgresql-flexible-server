@@ -11,7 +11,6 @@ locals {
   }
 }
 
-
 module "alarm_channel" {
   source              = "github.com/massdriver-cloud/terraform-modules//azure-alarm-channel?ref=40d6e54"
   md_metadata         = var.md_metadata

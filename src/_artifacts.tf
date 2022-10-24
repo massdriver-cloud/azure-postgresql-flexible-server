@@ -6,9 +6,16 @@ locals {
     username = azurerm_postgresql_flexible_server.main.administrator_login
     password = azurerm_postgresql_flexible_server.main.administrator_password
     hostname = azurerm_postgresql_flexible_server.main.fqdn
-    port     = 5432
+    port     = var.addons.pgbouncer ? 6432 : 5432
+    # PgBouncer uses port 6432 of the database server.
+    #
+    # MSFT Docs:
+    # When enabled, PgBouncer runs on port 6432 on your database server.
+    # You can change your application’s database connection configuration to use the same host name,
+    # but change the port to 6432 to start using PgBouncer and benefit from improved idle connection scaling.
   }
-  data_security = {}
+  data_security = {
+  }
 }
 
 resource "massdriver_artifact" "authentication" {
