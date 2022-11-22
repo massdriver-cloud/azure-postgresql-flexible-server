@@ -350,7 +350,7 @@ ui:
         - memory_metric_alert
         - storage_metric_alert
         - '*'
-      cpu_metric_alert:
+      cpu_metric_alert: &monitor_alarm_metric_ui
         ui:order:
           - severity
           - operator
@@ -360,20 +360,6 @@ ui:
           - threshold
           - '*'
       memory_metric_alert:
-        ui:order:
-          - severity
-          - operator
-          - aggregation
-          - frequency
-          - window_size
-          - threshold
-          - '*'
+        <<: *monitor_alarm_metric_ui
       storage_metric_alert:
-        ui:order:
-          - severity
-          - operator
-          - aggregation
-          - frequency
-          - window_size
-          - threshold
-          - '*'
+        <<: *monitor_alarm_metric_ui
