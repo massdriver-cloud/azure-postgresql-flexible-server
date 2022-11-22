@@ -61,7 +61,6 @@ Form input parameters for configuring a bundle for deployment.
 - **`backup`** *(object)*
   - **`backup_retention_days`** *(integer)*: How many days to retain PostgreSQL database backups (minimum of 7, maximum of 35). Minimum: `7`. Maximum: `35`. Default: `7`.
 - **`database`** *(object)*
-  - **`cidr`** *(string)*: Specify a /28 CIDR range within your VNet to create subnet for the database. The subnet CIDR cannot be changed after creation.
   - **`high_availability`** *(boolean)*: Default: `False`.
   - **`postgres_version`** *(string)*: The version of PostgreSQL to use. The version cannot be changed. Must be one of: `['11', '12', '13']`. Default: `13`.
   - **`sku_name`** *(string)*: Select the amount of cores, memory, and iops you need for your workload (D = General Purpose, E = Memory Optimized).
@@ -100,6 +99,8 @@ Form input parameters for configuring a bundle for deployment.
       - Automated
       - Custom
       - Disabled
+- **`network`** *(object)*
+  - **`auto`** *(boolean)*: Enabling this will automatically select an available CIDR range for your database. Unchecking will require you to specify the CIDR. Default: `True`.
 ## Examples
 
   ```json
