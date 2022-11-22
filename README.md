@@ -61,7 +61,7 @@ Form input parameters for configuring a bundle for deployment.
 - **`backup`** *(object)*
   - **`backup_retention_days`** *(integer)*: How many days to retain PostgreSQL database backups (minimum of 7, maximum of 35). Minimum: `7`. Maximum: `35`. Default: `7`.
 - **`database`** *(object)*
-  - **`cidr`** *(string)*: Specify a /28 CIDR range within your vnet to create subnet for the database. The subnet CIDR cannot be changed after creation.
+  - **`cidr`** *(string)*: Specify a /28 CIDR range within your VNet to create subnet for the database. The subnet CIDR cannot be changed after creation.
   - **`high_availability`** *(boolean)*: Default: `False`.
   - **`postgres_version`** *(string)*: The version of PostgreSQL to use. The version cannot be changed. Must be one of: `['11', '12', '13']`. Default: `13`.
   - **`sku_name`** *(string)*: Select the amount of cores, memory, and iops you need for your workload (D = General Purpose, E = Memory Optimized).
@@ -94,6 +94,12 @@ Form input parameters for configuring a bundle for deployment.
       - 16TB
       - 32TB
   - **`username`** *(string)*: The administrator login for the PostgreSQL Flexible Server. Username cannot be changed after creation. (Username cannot be 'admin', 'root', 'administrator', 'username', 'azure_superuser', 'azure_pg_admin', 'guest', or 'public'.).
+- **`monitoring`** *(object)*
+  - **`mode`** *(string)*: Enable and customize Function App metric alarms. Default: `AUTOMATED`.
+    - **One of**
+      - Automated
+      - Custom
+      - Disabled
 ## Examples
 
   ```json
@@ -163,7 +169,7 @@ Connections from other bundles that this bundle depends on.
       ```
 
   - **`specs`** *(object)*
-- **`vnet`** *(object)*: . Cannot contain additional properties.
+- **`azure_virtual_network`** *(object)*: . Cannot contain additional properties.
   - **`data`** *(object)*
     - **`infrastructure`** *(object)*
       - **`cidr`** *(string)*

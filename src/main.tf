@@ -5,7 +5,7 @@ resource "random_password" "master_password" {
 
 resource "azurerm_resource_group" "main" {
   name     = var.md_metadata.name_prefix
-  location = var.vnet.specs.azure.region
+  location = var.azure_virtual_network.specs.azure.region
   tags     = var.md_metadata.default_tags
 }
 
@@ -19,14 +19,14 @@ resource "azurerm_private_dns_zone_virtual_network_link" "main" {
   name                  = var.md_metadata.name_prefix
   resource_group_name   = azurerm_resource_group.main.name
   private_dns_zone_name = azurerm_private_dns_zone.main.name
-  virtual_network_id    = var.vnet.data.infrastructure.id
+  virtual_network_id    = var.azure_virtual_network.data.infrastructure.id
   tags                  = var.md_metadata.default_tags
 }
 
 resource "azurerm_postgresql_flexible_server" "main" {
   name                         = var.md_metadata.name_prefix
   resource_group_name          = azurerm_resource_group.main.name
-  location                     = var.vnet.specs.azure.region
+  location                     = var.azure_virtual_network.specs.azure.region
   version                      = var.database.postgres_version
   backup_retention_days        = var.backup.backup_retention_days
   delegated_subnet_id          = azurerm_subnet.main.id
