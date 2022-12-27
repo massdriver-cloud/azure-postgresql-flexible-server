@@ -45,6 +45,12 @@ The flexible server deployment model is designed to support high availability wi
 ### Virtual network integration
 Several networking resources are provisioned in order for your flexible server to be available to other resources in your Azure virtual network. A subnet is created and delegated to your flexible server for exclusive use. Additionally a private DNS zone is created and associated with your virtual network so your workloads can use the internal DNS reference.
 
+## Features
+### Auto CIDR
+The Masssdriver Auto CIDR feature takes the burden of selecting a CIDR range away from you by determining the next available CIDR range and automatically provisions it. You still have the option to manually set your CIDR range if you prefer.
+### Extension support
+Azure PostgresQL Flexible Server bundle now supports the PgBouncer extension.
+
 ## Best Practices
 ### Dedicated Subnet and DNS
 A dedicated virtual network subnet with its own private DNS zone is provisioned for VNet integration
