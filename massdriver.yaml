@@ -166,35 +166,6 @@ params:
           title: Compute SKU
           description: Select the amount of cores, memory, and iops you need for your workload (D = General Purpose, E = Memory Optimized).
           type: string
-          oneOf:
-            - title: D2s (2 vCores, 8 GiB memory, 3200 max iops)
-              const: GP_Standard_D2s_v3
-            - title: D4s (4 vCores, 16 GiB memory, 6400 max iops)
-              const: GP_Standard_D4s_v3
-            - title: D8s (8 vCores, 32 GiB memory, 12800 max iops)
-              const: GP_Standard_D8s_v3
-            - title: D16s (16 vCores, 64 GiB memory, 18000 max iops)
-              const: GP_Standard_D16s_v3
-            - title: D32s (32 vCores, 128 GiB memory, 18000 max iops)
-              const: GP_Standard_D32s_v3
-            - title: D48s (48 vCores, 192 GiB memory, 18000 max iops)
-              const: GP_Standard_D48s_v3
-            - title: D64s (64 vCores, 256 GiB memory, 18000 max iops)
-              const: GP_Standard_D64s_v3
-            - title: E2s (2 vCores, 16 GiB memory, 3200 max iops)
-              const: MO_Standard_E2s_v3
-            - title: E4s (4 vCores, 32 GiB memory, 6400 max iops)
-              const: MO_Standard_E4s_v3
-            - title: E8s (8 vCores, 64 GiB memory, 12800 max iops)
-              const: MO_Standard_E8s_v3
-            - title: E16s (16 vCores, 128 GiB memory, 18000 max iops)
-              const: MO_Standard_E16s_v3
-            - title: E32s (32 vCores, 256 GiB memory, 18000 max iops)
-              const: MO_Standard_E32s_v3
-            - title: E48s (48 vCores, 384 GiB memory, 18000 max iops)
-              const: MO_Standard_E48s_v3
-            - title: E64s (64 vCores, 432 GiB memory, 18000 max iops)
-              const: MO_Standard_E64s_v3
         storage_mb:
           title: Storage
           description: The amount of storage capacity available to your Azure Database for PostgreSQL server. Storage size cannot be scaled down.
@@ -354,6 +325,9 @@ ui:
       - username
       - high_availability
       - "*"
+    sku_name:
+      ui:field: "instanceTypesDropdown"
+      query: "connections.azure_virtual_network.specs.azure.region"
   network:
     ui:order:
       - auto
