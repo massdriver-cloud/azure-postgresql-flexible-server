@@ -1,9 +1,9 @@
 schema: draft-07
-name: azure-postgres-flexible-server
+name: azure-postgresql-flexible-server
 description: "Azure PostgreSQL Flexible Server is a fully managed database service designed to provide more control and flexibility over database management functions and configurations."
 source_url: github.com/massdriver-cloud/azure-postgresql-flexible-server
-access: "public"
-type: bundle
+access: public
+type: infrastructure
 
 MonitorAlarmMetric: &monitor_alarm_metric
   required:
