@@ -168,7 +168,7 @@ params:
           type: string
         storage_mb:
           title: Storage
-          description: The amount of storage capacity available to your Azure Database for PostgreSQL server. Storage size cannot be scaled down.
+          description: The amount of storage capacity available to your Azure Database for PostgreSQL server. **Storage size cannot be scaled down**.
           type: integer
           oneOf:
             - title: 32GB
@@ -318,7 +318,6 @@ ui:
     - "*"
   database:
     ui:order:
-      - cidr
       - postgres_version
       - sku_name
       - storage_mb

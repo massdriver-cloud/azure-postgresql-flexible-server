@@ -64,7 +64,7 @@ Form input parameters for configuring a bundle for deployment.
   - **`high_availability`** *(boolean)*: Default: `False`.
   - **`postgres_version`** *(string)*: The version of PostgreSQL to use. The version cannot be changed. Must be one of: `['11', '12', '13']`. Default: `13`.
   - **`sku_name`** *(string)*: Select the amount of cores, memory, and iops you need for your workload (D = General Purpose, E = Memory Optimized).
-  - **`storage_mb`** *(integer)*: The amount of storage capacity available to your Azure Database for PostgreSQL server. Storage size cannot be scaled down.
+  - **`storage_mb`** *(integer)*: The amount of storage capacity available to your Azure Database for PostgreSQL server. **Storage size cannot be scaled down**.
     - **One of**
       - 32GB
       - 64GB
@@ -248,7 +248,7 @@ Resources created by this bundle that can be connected to other bundles.
       - **Any of**
         - AWS Security information*object*: Informs downstream services of network and/or IAM policies. Cannot contain additional properties.
           - **`iam`** *(object)*: IAM Policies. Cannot contain additional properties.
-            - **`^[a-z-/]+$`** *(object)*
+            - **`^[a-z]+[a-z_]*[a-z]+$`** *(object)*
               - **`policy_arn`** *(string)*: AWS IAM policy ARN.
 
                 Examples:
@@ -260,7 +260,7 @@ Resources created by this bundle that can be connected to other bundles.
                 "arn:aws:ec2::ACCOUNT_NUMBER:vpc/vpc-foo"
                 ```
 
-          - **`identity`** *(object)*: For instances where IAM policies must be attached to a role attached to an AWS resource, for instance AWS Eventbridge to Firehose, this attribute should be used to allow the downstream to attach its policies (Firehose) directly to the IAM role created by the upstream (Eventbridge). It is important to remember that connections in massdriver are one way. This scheme perserves the dependency relationship while allowing bundles to control the lifecycles of resources under it's management. Cannot contain additional properties.
+          - **`identity`** *(object)*: For instances where IAM policies must be attached to a role attached to an AWS resource, for instance AWS Eventbridge to Firehose, this attribute should be used to allow the downstream to attach it's policies (Firehose) directly to the IAM role created by the upstream (Eventbridge). It is important to remember that connections in massdriver are one way, this scheme perserves the dependency relationship while allowing bundles to control the lifecycles of resources under it's management. Cannot contain additional properties.
             - **`role_arn`** *(string)*: ARN for this resources IAM Role.
 
               Examples:
@@ -300,7 +300,7 @@ Resources created by this bundle that can be connected to other bundles.
               - **`scope`** *(string)*: Azure IAM Scope.
         - Security*object*: GCP Security Configuration. Cannot contain additional properties.
           - **`iam`** *(object)*: IAM Roles And Conditions. Cannot contain additional properties.
-            - **`^[a-z-/]+$`** *(object)*
+            - **`^[a-z]+[a-z_]*[a-z]$`** *(object)*
               - **`condition`** *(string)*: GCP IAM Condition.
               - **`role`**: GCP Role.
 
