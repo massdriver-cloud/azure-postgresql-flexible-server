@@ -62,7 +62,7 @@ Form input parameters for configuring a bundle for deployment.
   - **`backup_retention_days`** *(integer)*: How many days to retain PostgreSQL database backups (minimum of 7, maximum of 35). Minimum: `7`. Maximum: `35`. Default: `7`.
 - **`database`** *(object)*
   - **`high_availability`** *(boolean)*: Default: `False`.
-  - **`postgres_version`** *(string)*: The version of PostgreSQL to use. The version cannot be changed. Must be one of: `['11', '12', '13']`. Default: `13`.
+  - **`postgres_version`** *(string)*: The version of PostgreSQL to use. The version cannot be changed. Must be one of: `['11', '12', '13', '14']`. Default: `14`.
   - **`sku_name`** *(string)*: Select the amount of cores, memory, and iops you need for your workload (D = General Purpose, E = Memory Optimized).
   - **`storage_mb`** *(integer)*: The amount of storage capacity available to your Azure Database for PostgreSQL server. **Storage size cannot be scaled down**.
     - **One of**
@@ -322,6 +322,49 @@ Resources created by this bundle that can be connected to other bundles.
                 ```
 
   - **`specs`** *(object)*: Cannot contain additional properties.
+    - **`aws`** *(object)*: .
+      - **`region`** *(string)*: AWS Region to provision in.
+
+        Examples:
+        ```json
+        "us-west-2"
+        ```
+
+    - **`azure`** *(object)*: .
+      - **`region`** *(string)*: Select the Azure region you'd like to provision your resources in.
+    - **`gcp`** *(object)*: .
+      - **`project`** *(string)*
+      - **`region`** *(string)*: The GCP region to provision resources in.
+
+        Examples:
+        ```json
+        "us-east1"
+        ```
+
+        ```json
+        "us-east4"
+        ```
+
+        ```json
+        "us-west1"
+        ```
+
+        ```json
+        "us-west2"
+        ```
+
+        ```json
+        "us-west3"
+        ```
+
+        ```json
+        "us-west4"
+        ```
+
+        ```json
+        "us-central1"
+        ```
+
     - **`rdbms`** *(object)*: Common metadata for relational databases.
       - **`engine`** *(string)*: The type of database server.
 
