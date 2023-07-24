@@ -96,7 +96,6 @@ Form input parameters for configuring a bundle for deployment.
       },
       "database": {
           "high_availability": false,
-          "sku_name": "GP_Standard_D2s_v3",
           "storage_mb": 32768
       }
   }
@@ -110,7 +109,6 @@ Form input parameters for configuring a bundle for deployment.
       },
       "database": {
           "high_availability": true,
-          "sku_name": "MO_Standard_E4s_v3",
           "storage_mb": 262144
       }
   }
