@@ -58,6 +58,7 @@ Form input parameters for configuring a bundle for deployment.
 
 - **`addons`** *(object)*
   - **`pgbouncer`** *(boolean)*: PgBouncer is a connection pooler for PostgreSQL. It reduces the number of connections to the database, which can improve performance. Default: `False`.
+  - **`pgvector`** *(boolean)*: PgVector extension adds an open-source vector similarity search to PostgreSQL. Default: `False`.
 - **`backup`** *(object)*
   - **`backup_retention_days`** *(integer)*: How many days to retain PostgreSQL database backups (minimum of 7, maximum of 35). Minimum: `7`. Maximum: `35`. Default: `7`.
 - **`database`** *(object)*

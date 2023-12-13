@@ -248,6 +248,11 @@ params:
           description: PgBouncer is a connection pooler for PostgreSQL. It reduces the number of connections to the database, which can improve performance.
           type: boolean
           default: false
+        pgvector:
+          title: PgVector
+          description: PgVector extension adds an open-source vector similarity search to PostgreSQL.
+          type: boolean
+          default: false
     monitoring:
       type: object
       title: Monitoring
@@ -342,6 +347,7 @@ ui:
   addons:
     ui:order:
       - pgbouncer
+      - pgvector
       - "*"
   monitoring:
     ui:order:
