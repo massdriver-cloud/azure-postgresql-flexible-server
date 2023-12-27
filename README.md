@@ -63,7 +63,7 @@ Form input parameters for configuring a bundle for deployment.
   - **`backup_retention_days`** *(integer)*: How many days to retain PostgreSQL database backups (minimum of 7, maximum of 35). Minimum: `7`. Maximum: `35`. Default: `7`.
 - **`database`** *(object)*
   - **`high_availability`** *(boolean)*: Default: `False`.
-  - **`postgres_version`** *(string)*: The version of PostgreSQL to use. The version cannot be changed. Must be one of: `['11', '12', '13', '14']`. Default: `14`.
+  - **`postgres_version`** *(string)*: The version of PostgreSQL to use. The version cannot be changed. Must be one of: `['16', '15', '14', '13', '12', '11']`.
   - **`sku_name`** *(string)*: Select the amount of cores, memory, and iops you need for your workload (D = General Purpose, E = Memory Optimized).
   - **`storage_mb`** *(integer)*: The amount of storage capacity available to your Azure Database for PostgreSQL server. **Storage size cannot be scaled down**.
     - **One of**

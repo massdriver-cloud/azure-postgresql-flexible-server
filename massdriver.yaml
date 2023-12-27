@@ -140,12 +140,13 @@ params:
           description: The version of PostgreSQL to use. The version cannot be changed.
           $md.immutable: true
           type: string
-          default: "14"
           enum:
-            - "11"
-            - "12"
-            - "13"
+            - "16"
+            - "15"
             - "14"
+            - "13"
+            - "12"
+            - "11"
         username:
           title: Username
           description: The administrator login for the PostgreSQL Flexible Server. Username cannot be changed after creation. (Username cannot be 'admin', 'root', 'administrator', 'username', 'azure_superuser', 'azure_pg_admin', 'guest', or 'public'.)
