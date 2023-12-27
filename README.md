@@ -64,7 +64,8 @@ Form input parameters for configuring a bundle for deployment.
   - **`geo_redundant_backup`** *(boolean)*: Enable geo-redundant backups. **Cannot be enabled for Replica or PointInTimeRestore modes, cannot be changed after deployment**. Default: `False`.
 - **`database`** *(object)*
   - **`high_availability`** *(boolean)*: Default: `False`.
-  - **`mode`** *(string)*: Select the deployment mode for your PostgreSQL Flexible Server. Must be one of: `['Default', 'Replica', 'Update', 'PointInTimeRestore']`. Default: `Default`.
+  - **`mode`** *(string)*: Select the deployment mode for your PostgreSQL Flexible Server. **Cannot be changed after deployment**. Must be one of: `['Default', 'Replica', 'PointInTimeRestore']`. Default: `Default`.
+  - **`postgres_version`** *(string)*: The version of PostgreSQL to use. **Cannot be downgraded after deployment**. Must be one of: `['15', '14', '13', '12', '11']`.
   - **`sku_name`** *(string)*: Select the amount of cores, memory, and iops you need for your workload (D = General Purpose, E = Memory Optimized).
   - **`storage_mb`** *(integer)*: The amount of storage capacity available to your Azure Database for PostgreSQL server. **Storage size cannot be scaled down**.
     - **One of**

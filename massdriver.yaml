@@ -131,20 +131,31 @@ params:
       type: object
       required:
         - mode
+        - postgres_version
         - username
         - sku_name
         - storage_mb
       properties:
         mode:
           title: Deployment Mode
-          description: Select the deployment mode for your PostgreSQL Flexible Server.
+          description: Select the deployment mode for your PostgreSQL Flexible Server. **Cannot be changed after deployment**.
           type: string
           default: Default
+          $md.immutable: true
           enum:
             - Default
             - Replica
-            - Update
             - PointInTimeRestore
+        postgres_version:
+          title: PostgreSQL version
+          description: The version of PostgreSQL to use. **Cannot be downgraded after deployment**.
+          type: string
+          enum:
+            - "15"
+            - "14"
+            - "13"
+            - "12"
+            - "11"
         username:
           title: Username
           description: The administrator login for the PostgreSQL Flexible Server. Username cannot be changed after creation. (Username cannot be 'admin', 'root', 'administrator', 'username', 'azure_superuser', 'azure_pg_admin', 'guest', or 'public'.)
@@ -204,51 +215,9 @@ params:
             - properties:
                 mode:
                   const: Default
-                postgres_version:
-                  title: PostgreSQL version
-                  description: The version of PostgreSQL to use.
-                  $md.immutable: true
-                  type: string
-                  enum:
-                    - "16"
-                    - "15"
-                    - "14"
-                    - "13"
-                    - "12"
-                    - "11"
-              required:
-                - postgres_version
-            - properties:
-                mode:
-                  const: Update
-                postgres_version:
-                  title: PostgreSQL version
-                  description: The version of PostgreSQL to use.
-                  type: string
-                  enum:
-                    - "16"
-                    - "15"
-                    - "14"
-                    - "13"
-                    - "12"
-                    - "11"
-              required:
-                - postgres_version
             - properties:
                 mode:
                   const: Replica
-                postgres_version:
-                  title: PostgreSQL version
-                  description: The version of PostgreSQL to use.
-                  $md.immutable: true
-                  type: string
-                  enum:
-                    - "16"
-                    - "15"
-                    - "14"
-                    - "13"
-                    - "12"
-                    - "11"
                 source_server:
                   title: Source Server Resource ID
                   description: The resource ID of the source PostgreSQL Flexible Server to restore from or set a replica for. **Cannot be changed after creation**.
@@ -258,23 +227,10 @@ params:
                   message:
                     pattern: Must be a valid resource ID of a PostgreSQL Flexible Server.
               required:
-                - postgres_version
                 - source_server
             - properties:
                 mode:
                   const: PointInTimeRestore
-                postgres_version:
-                  title: PostgreSQL version
-                  description: The version of PostgreSQL to use.
-                  $md.immutable: true
-                  type: string
-                  enum:
-                    - "16"
-                    - "15"
-                    - "14"
-                    - "13"
-                    - "12"
-                    - "11"
                 source_server:
                   title: Source Server Resource ID
                   description: The resource ID of the source PostgreSQL Flexible Server to restore from or set a replica for. **Cannot be changed after creation**.
@@ -291,7 +247,6 @@ params:
                   message:
                     pattern: Must be in RFC3339 format. Ex. 2023-12-25T00:00:00-00:00
               required:
-                - postgres_version
                 - source_server
                 - restore_time
     network:

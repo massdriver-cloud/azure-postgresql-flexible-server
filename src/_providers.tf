@@ -13,6 +13,10 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 3.0"
     }
+    cache = {
+      version = "~> 0.0"
+      source  = "massdriver-cloud/cache"
+    }
   }
 }
 
