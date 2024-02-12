@@ -21,6 +21,8 @@ resource "azurerm_private_dns_zone_virtual_network_link" "main" {
   private_dns_zone_name = azurerm_private_dns_zone.main.name
   virtual_network_id    = var.azure_virtual_network.data.infrastructure.id
   tags                  = var.md_metadata.default_tags
+
+  depends_on = [azurerm_subnet.main]
 }
 
 resource "azurerm_postgresql_flexible_server" "main" {
