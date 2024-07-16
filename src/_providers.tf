@@ -3,15 +3,12 @@ terraform {
   required_providers {
     massdriver = {
       source  = "massdriver-cloud/massdriver"
-      version = "~> 1.0"
     }
     utility = {
       source  = "massdriver-cloud/utility"
-      version = "~> 0.0"
     }
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.0"
     }
   }
 }
