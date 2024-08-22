@@ -15,6 +15,8 @@ Azure PostgreSQL Flexible Server is a fully managed relational database service 
 
 #### Server Connection Issues
 
+**Note:** PostgresQL bundle is configured to be isolated on the virtual network. By design, it refuses connection attempts made from outside of the virtual network. To connect, you may need to configure VPN or a jump box.
+
 If you are having trouble connecting to your PostgreSQL Flexible Server, you can troubleshoot using the following Azure CLI commands:
 
 Check the server status:
