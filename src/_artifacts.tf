@@ -20,7 +20,6 @@ locals {
 
 resource "massdriver_artifact" "authentication" {
   field                = "authentication"
-  provider_resource_id = azurerm_postgresql_flexible_server.main.id
   name                 = "PostgreSQL Server ${var.md_metadata.name_prefix} (${azurerm_postgresql_flexible_server.main.id})"
   artifact = jsonencode(
     {

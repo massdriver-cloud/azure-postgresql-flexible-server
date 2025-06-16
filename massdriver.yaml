@@ -2,8 +2,11 @@ schema: draft-07
 name: azure-postgresql-flexible-server
 description: "Azure PostgreSQL Flexible Server is a fully managed database service designed to provide more control and flexibility over database management functions and configurations."
 source_url: github.com/massdriver-cloud/azure-postgresql-flexible-server
-access: public
 type: infrastructure
+
+steps:
+  - path: src
+    provisioner: terraform
 
 MonitorAlarmMetric: &monitor_alarm_metric
   required:
@@ -249,11 +252,83 @@ params:
           description: PgBouncer is a connection pooler for PostgreSQL. It reduces the number of connections to the database, which can improve performance.
           type: boolean
           default: false
-        pgvector:
-          title: PgVector
-          description: PgVector extension adds an open-source vector similarity search to PostgreSQL.
-          type: boolean
-          default: false
+        extensions:
+          title: Extensions
+          description: Additional PostgreSQL extensions to install on the database.
+          type: array
+          uniqueItems: true
+          default: []
+          items:
+            type: string
+            enum:
+              - ADDRESS_STANDARDIZER
+              - ADDRESS_STANDARDIZER_DATA
+              - AGE
+              - AMCHECK
+              - ANON
+              - AZURE_AI
+              - AZURE_STORAGE
+              - BLOOM
+              - BTREE_GIN
+              - BTREE_GIST
+              - CITEXT
+              - CUBE
+              - DBLINK
+              - DICT_INT
+              - DICT_XSYNC
+              - EARTHDISTANCE
+              - FUZZYSTRMATCH
+              - HLL
+              - HSTORE
+              - HYPOPG
+              - INTAGG
+              - INTARRAY
+              - ISN
+              - LO
+              - LOGIN_HOOK
+              - LTREE
+              - ORACLE_FDW
+              - ORAFCE
+              - PAGEINSPECT
+              - PG_BUFFER_CACHE
+              - PG_CRON
+              - PG_DISKANN
+              - PG_FREESPACEMAP
+              - PG_HINT_PLAN
+              - PG_PARTMAN
+              - PG_PREWARM
+              - PG_REPACK
+              - PG_SQUEEZE
+              - PG_STAT_STATEMENTS
+              - PG_TRGM
+              - PG_VISIBILITY
+              - PGAUDIT
+              - PGCRYPTO
+              - PGLOGICAL
+              - PGGROWLOCKS
+              - PGSTATTUPLE
+              - PLPGSQL
+              - PLV8
+              - POSTGIS
+              - POSTGIS_RASTER
+              - POSTGIS_SFCGAL
+              - POSTGIS_TIGER_GEOCODER
+              - POSTGIS_TOPOLOGY
+              - POSTGRES_FDW
+              - POSTGRESQL_PROTOBUF
+              - SEMVER
+              - SESSION_VARIABLE
+              - SSLINFO
+              - TABLEFUNC
+              - TDIGEST
+              - TDS_FDW
+              - TIMESCALEDB
+              - TOPN
+              - TSM_SYSTEM_ROWS
+              - TSM_SYSTEM_TIME
+              - UNACCENT
+              - UUID-OSSP
+              - VECTOR
     monitoring:
       type: object
       title: Monitoring

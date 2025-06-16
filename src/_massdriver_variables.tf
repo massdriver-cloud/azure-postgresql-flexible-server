@@ -1,8 +1,8 @@
 // Auto-generated variable declarations from massdriver.yaml
 variable "addons" {
   type = object({
-    pgbouncer = optional(bool)
-    pgvector  = optional(bool)
+    extensions = optional(list(string))
+    pgbouncer  = optional(bool)
   })
 }
 variable "azure_service_principal" {
