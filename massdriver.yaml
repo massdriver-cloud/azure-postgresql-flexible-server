@@ -1,105 +1,104 @@
 schema: draft-07
 name: azure-postgresql-flexible-server
-description: "Azure PostgreSQL Flexible Server is a fully managed database service designed to provide more control and flexibility over database management functions and configurations."
-source_url: github.com/massdriver-cloud/azure-postgresql-flexible-server
-type: infrastructure
-
+version: 1.0.0
+description: Azure PostgreSQL Flexible Server is a fully managed database service designed to provide more control and flexibility over database management functions and configurations.
+source_url: https://github.com/massdriver-cloud/azure-postgresql-flexible-server
+type: application
 steps:
-  - path: src
-    provisioner: terraform
-
-MonitorAlarmMetric: &monitor_alarm_metric
-  required:
-    - severity
-    - frequency
-    - window_size
-    - aggregation
-    - operator
-    - threshold
-  properties:
+- path: src
+  provisioner: opentofu
+MonitorAlarmMetric:
+  required: &1
+  - severity
+  - frequency
+  - window_size
+  - aggregation
+  - operator
+  - threshold
+  properties: &2
     severity:
       title: Severity
       description: The severity of the alarm.
       type: integer
       default: 1
       oneOf:
-        - title: Critical
-          const: 0
-        - title: Error
-          const: 1
-        - title: Warning
-          const: 2
-        - title: Information
-          const: 3
-        - title: Verbose
-          const: 4
+      - title: Critical
+        const: 0
+      - title: Error
+        const: 1
+      - title: Warning
+        const: 2
+      - title: Information
+        const: 3
+      - title: Verbose
+        const: 4
     frequency:
       title: Frequency
       description: The evaluation frequency of the alarms.
       type: string
       default: PT1M
       oneOf:
-        - title: Every 1 minute
-          const: PT1M
-        - title: Every 5 minutes
-          const: PT5M
-        - title: Every 15 minutes
-          const: PT15M
-        - title: Every 30 minutes
-          const: PT30M
-        - title: Every 1 hour
-          const: PT1H
+      - title: Every 1 minute
+        const: PT1M
+      - title: Every 5 minutes
+        const: PT5M
+      - title: Every 15 minutes
+        const: PT15M
+      - title: Every 30 minutes
+        const: PT30M
+      - title: Every 1 hour
+        const: PT1H
     window_size:
       title: Alarm window
       description: The time range over which the alarm is evaluated.
       type: string
       default: PT5M
       oneOf:
-        - title: Every 1 minute
-          const: PT1M
-        - title: Every 5 minutes
-          const: PT5M
-        - title: Every 15 minutes
-          const: PT15M
-        - title: Every 30 minutes
-          const: PT30M
-        - title: Every 1 hour
-          const: PT1H
-        - title: Every 6 hours
-          const: PT6H
-        - title: Every 12 hours
-          const: PT12H
-        - title: Every 24 hours
-          const: P1D
+      - title: Every 1 minute
+        const: PT1M
+      - title: Every 5 minutes
+        const: PT5M
+      - title: Every 15 minutes
+        const: PT15M
+      - title: Every 30 minutes
+        const: PT30M
+      - title: Every 1 hour
+        const: PT1H
+      - title: Every 6 hours
+        const: PT6H
+      - title: Every 12 hours
+        const: PT12H
+      - title: Every 24 hours
+        const: P1D
     aggregation:
       title: Aggregation
       description: The aggregation type of the alarm.
       type: string
       default: Average
       enum:
-        - Average
-        - Count
-        - Minimum
-        - Maximum
-        - Total
+      - Average
+      - Count
+      - Minimum
+      - Maximum
+      - Total
     operator:
       title: Operator
       description: The operator used to compare the metric value to the threshold.
       type: string
       default: GreaterThanOrEqual
       oneOf:
-        - title: Greater than or equal to
-          const: GreaterThanOrEqual
-        - title: Greater than
-          const: GreaterThan
-        - title: Less than or equal to
-          const: LessThanOrEqual
-        - title: Less than
-          const: LessThan
-        - title: Equals
-          const: Equals
-        - title: Not equal to
-          const: NotEquals
+      - title: Greater than or equal to
+        const: GreaterThanOrEqual
+      - title: Greater than
+        const: GreaterThan
+      - title: Less than or equal to
+        const: LessThanOrEqual
+      - title: Less than
+        const: LessThan
+      - title: Equals
+        const: Equals
+      - title: Not equal to
+        const: NotEquals
     threshold:
       title: Threshold
       description: The percentage threshold for the metric to trigger an alarm.
@@ -107,67 +106,66 @@ MonitorAlarmMetric: &monitor_alarm_metric
       default: 90
       minimum: 0
       maximum: 100
-
 params:
   examples:
-    - __name: Development
-      database:
-        storage_mb: 32768
-        high_availability: false
-      backup:
-        backup_retention_days: 7
-    - __name: Production
-      database:
-        storage_mb: 262144
-        high_availability: true
-      backup:
-        backup_retention_days: 30
+  - __name: Development
+    database:
+      storage_mb: 32768
+      high_availability: false
+    backup:
+      backup_retention_days: 7
+  - __name: Production
+    database:
+      storage_mb: 262144
+      high_availability: true
+    backup:
+      backup_retention_days: 30
   required:
-    - database
-    - network
-    - backup
-    - addons
-    - monitoring
+  - database
+  - network
+  - backup
+  - addons
+  - monitoring
   properties:
     database:
       title: Database
       type: object
       required:
-        - postgres_version
-        - username
-        - sku_name
-        - storage_mb
+      - postgres_version
+      - username
+      - sku_name
+      - storage_mb
       properties:
         postgres_version:
           title: PostgreSQL version
           description: The version of PostgreSQL to use. The version cannot be changed.
-          $md.immutable: true
+          "$md.immutable": true
           type: string
           enum:
-            - "16"
-            - "15"
-            - "14"
-            - "13"
-            - "12"
-            - "11"
+          - '16'
+          - '15'
+          - '14'
+          - '13'
+          - '12'
+          - '11'
         username:
           title: Username
           description: The administrator login for the PostgreSQL Flexible Server. Username cannot be changed after creation. (Username cannot be 'admin', 'root', 'administrator', 'username', 'azure_superuser', 'azure_pg_admin', 'guest', or 'public'.)
           type: string
-          $md.immutable: true
-          pattern: ^[a-z][a-z0-9]+$
+          "$md.immutable": true
+          pattern: "^[a-z][a-z0-9]+$"
           message:
             pattern: Admin username cannot start with numbers and must only contain characters and numbers.
           not:
             enum:
-              - admin
-              - root
-              - administrator
-              - username
-              - azure_superuser
-              - azure_pg_admin
-              - guest
-              - public
+            - admin
+            - root
+            - administrator
+            - username
+            - azure_superuser
+            - azure_pg_admin
+            - guest
+            - public
         sku_name:
           title: Compute SKU
           description: Select the amount of cores, memory, and iops you need for your workload (D = General Purpose, E = Memory Optimized).
@@ -177,28 +175,28 @@ params:
           description: The amount of storage capacity available to your Azure Database for PostgreSQL server. **Storage size cannot be scaled down**.
           type: integer
           oneOf:
-            - title: 32GB
-              const: 32768
-            - title: 64GB
-              const: 65536
-            - title: 128GB
-              const: 131072
-            - title: 256GB
-              const: 262144
-            - title: 512GB
-              const: 524288
-            - title: 1TB
-              const: 1048576
-            - title: 2TB
-              const: 2097152
-            - title: 4TB
-              const: 4194304
-            - title: 8TB
-              const: 8388608
-            - title: 16TB
-              const: 16777216
-            - title: 32TB
-              const: 33554432
+          - title: 32GB
+            const: 32768
+          - title: 64GB
+            const: 65536
+          - title: 128GB
+            const: 131072
+          - title: 256GB
+            const: 262144
+          - title: 512GB
+            const: 524288
+          - title: 1TB
+            const: 1048576
+          - title: 2TB
+            const: 2097152
+          - title: 4TB
+            const: 4194304
+          - title: 8TB
+            const: 8388608
+          - title: 16TB
+            const: 16777216
+          - title: 32TB
+            const: 33554432
         high_availability:
           title: Enable High Availability (not available for North Central US or West US)
           type: boolean
@@ -212,7 +210,7 @@ params:
           type: boolean
           description: Enabling this will automatically select an available CIDR range for your database. Unchecking will require you to specify the CIDR.
           default: true
-          $md.immutable: true
+          "$md.immutable": true
       dependencies:
         auto:
           oneOf:
@@ -226,10 +224,10 @@ params:
                 title: Subnet CIDR
                 type: string
                 description: Specify a /28 CIDR range within your vnet to create subnet for the database. The subnet CIDR cannot be changed after creation.
-                $md.immutable: true
-                pattern: ^(?:10\.(?:[0-9]|[0-9]{2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|172\.(?:1[6-9]|2[0-9]|3[0-1])|192\.168)(?:\.(?:[0-9]|[0-9]{2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){2}\/28$
+                "$md.immutable": true
+                pattern: "^(?:10\\.(?:[0-9]|[0-9]{2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|172\\.(?:1[6-9]|2[0-9]|3[0-1])|192\\.168)(?:\\.(?:[0-9]|[0-9]{2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){2}\\/28$"
                 message:
-                  pattern: "Must be a /28 range from within the VNet CIDR"
+                  pattern: Must be a /28 range from within the VNet CIDR
             required:
             - cidr
     backup:
@@ -261,74 +259,74 @@ params:
           items:
             type: string
             enum:
-              - ADDRESS_STANDARDIZER
-              - ADDRESS_STANDARDIZER_DATA
-              - AGE
-              - AMCHECK
-              - ANON
-              - AZURE_AI
-              - AZURE_STORAGE
-              - BLOOM
-              - BTREE_GIN
-              - BTREE_GIST
-              - CITEXT
-              - CUBE
-              - DBLINK
-              - DICT_INT
-              - DICT_XSYNC
-              - EARTHDISTANCE
-              - FUZZYSTRMATCH
-              - HLL
-              - HSTORE
-              - HYPOPG
-              - INTAGG
-              - INTARRAY
-              - ISN
-              - LO
-              - LOGIN_HOOK
-              - LTREE
-              - ORACLE_FDW
-              - ORAFCE
-              - PAGEINSPECT
-              - PG_BUFFER_CACHE
-              - PG_CRON
-              - PG_DISKANN
-              - PG_FREESPACEMAP
-              - PG_HINT_PLAN
-              - PG_PARTMAN
-              - PG_PREWARM
-              - PG_REPACK
-              - PG_SQUEEZE
-              - PG_STAT_STATEMENTS
-              - PG_TRGM
-              - PG_VISIBILITY
-              - PGAUDIT
-              - PGCRYPTO
-              - PGLOGICAL
-              - PGGROWLOCKS
-              - PGSTATTUPLE
-              - PLPGSQL
-              - PLV8
-              - POSTGIS
-              - POSTGIS_RASTER
-              - POSTGIS_SFCGAL
-              - POSTGIS_TIGER_GEOCODER
-              - POSTGIS_TOPOLOGY
-              - POSTGRES_FDW
-              - POSTGRESQL_PROTOBUF
-              - SEMVER
-              - SESSION_VARIABLE
-              - SSLINFO
-              - TABLEFUNC
-              - TDIGEST
-              - TDS_FDW
-              - TIMESCALEDB
-              - TOPN
-              - TSM_SYSTEM_ROWS
-              - TSM_SYSTEM_TIME
-              - UNACCENT
-              - UUID-OSSP
-              - VECTOR
+            - ADDRESS_STANDARDIZER
+            - ADDRESS_STANDARDIZER_DATA
+            - AGE
+            - AMCHECK
+            - ANON
+            - AZURE_AI
+            - AZURE_STORAGE
+            - BLOOM
+            - BTREE_GIN
+            - BTREE_GIST
+            - CITEXT
+            - CUBE
+            - DBLINK
+            - DICT_INT
+            - DICT_XSYNC
+            - EARTHDISTANCE
+            - FUZZYSTRMATCH
+            - HLL
+            - HSTORE
+            - HYPOPG
+            - INTAGG
+            - INTARRAY
+            - ISN
+            - LO
+            - LOGIN_HOOK
+            - LTREE
+            - ORACLE_FDW
+            - ORAFCE
+            - PAGEINSPECT
+            - PG_BUFFER_CACHE
+            - PG_CRON
+            - PG_DISKANN
+            - PG_FREESPACEMAP
+            - PG_HINT_PLAN
+            - PG_PARTMAN
+            - PG_PREWARM
+            - PG_REPACK
+            - PG_SQUEEZE
+            - PG_STAT_STATEMENTS
+            - PG_TRGM
+            - PG_VISIBILITY
+            - PGAUDIT
+            - PGCRYPTO
+            - PGLOGICAL
+            - PGGROWLOCKS
+            - PGSTATTUPLE
+            - PLPGSQL
+            - PLV8
+            - POSTGIS
+            - POSTGIS_RASTER
+            - POSTGIS_SFCGAL
+            - POSTGIS_TIGER_GEOCODER
+            - POSTGIS_TOPOLOGY
+            - POSTGRES_FDW
+            - POSTGRESQL_PROTOBUF
+            - SEMVER
+            - SESSION_VARIABLE
+            - SSLINFO
+            - TABLEFUNC
+            - TDIGEST
+            - TDS_FDW
+            - TIMESCALEDB
+            - TOPN
+            - TSM_SYSTEM_ROWS
+            - TSM_SYSTEM_TIME
+            - UNACCENT
+            - UUID-OSSP
+            - VECTOR
     monitoring:
       type: object
       title: Monitoring
@@ -339,113 +337,113 @@ params:
           type: string
           default: AUTOMATED
           oneOf:
-            - const: AUTOMATED
-              title: Automated
-            - const: CUSTOM
-              title: Custom
-            - const: DISABLED
-              title: Disabled
+          - const: AUTOMATED
+            title: Automated
+          - const: CUSTOM
+            title: Custom
+          - const: DISABLED
+            title: Disabled
       dependencies:
         mode:
           oneOf:
-            - properties:
-                mode:
-                  const: AUTOMATED
-            - properties:
-                mode:
-                  const: DISABLED
-            - properties:
-                mode:
-                  const: CUSTOM
-                alarms:
-                  type: object
-                  title: Alarms
-                  properties:
-                    cpu_metric_alert:
-                      title: CPU
-                      type: object
-                      <<: *monitor_alarm_metric
-                    memory_metric_alert:
-                      title: Memory
-                      type: object
-                      <<: *monitor_alarm_metric
-                    storage_metric_alert:
-                      title: Storage
-                      type: object
-                      <<: *monitor_alarm_metric
-
+          - properties:
+              mode:
+                const: AUTOMATED
+          - properties:
+              mode:
+                const: DISABLED
+          - properties:
+              mode:
+                const: CUSTOM
+              alarms:
+                type: object
+                title: Alarms
+                properties:
+                  cpu_metric_alert:
+                    title: CPU
+                    type: object
+                    required: *1
+                    properties: *2
+                  memory_metric_alert:
+                    title: Memory
+                    type: object
+                    required: *1
+                    properties: *2
+                  storage_metric_alert:
+                    title: Storage
+                    type: object
+                    required: *1
+                    properties: *2
 connections:
   required:
-    - azure_service_principal
-    - azure_virtual_network
+  - azure_service_principal
+  - azure_virtual_network
   properties:
     azure_service_principal:
-      $ref: massdriver/azure-service-principal
+      "$ref": massdriver/azure-service-principal
     azure_virtual_network:
-      $ref: massdriver/azure-virtual-network
-
+      "$ref": massdriver/azure-virtual-network
 artifacts:
   required:
-    - authentication
+  - authentication
   properties:
     authentication:
-      $ref: massdriver/postgresql-authentication
-
+      "$ref": massdriver/postgresql-authentication
 ui:
   ui:order:
-    - database
-    - network
-    - backup
-    - addons
-    - monitoring
-    - "*"
+  - database
+  - network
+  - backup
+  - addons
+  - monitoring
+  - "*"
   database:
     ui:order:
-      - postgres_version
-      - sku_name
-      - storage_mb
-      - username
-      - high_availability
-      - "*"
+    - postgres_version
+    - sku_name
+    - storage_mb
+    - username
+    - high_availability
+    - "*"
     sku_name:
-      ui:field: "instanceTypesDropdown"
-      query: "connections.azure_virtual_network.specs.azure.region"
-      service: "Microsoft.DBforPostgreSQL"
+      ui:field: instanceTypesDropdown
+      query: connections.azure_virtual_network.specs.azure.region
+      service: Microsoft.DBforPostgreSQL
   network:
     ui:order:
-      - auto
-      - cidr
-      - "*"
+    - auto
+    - cidr
+    - "*"
   backup:
     ui:order:
-      - backup_retention_days
-      - "*"
+    - backup_retention_days
+    - "*"
   addons:
     ui:order:
-      - pgbouncer
-      - pgvector
-      - "*"
+    - pgbouncer
+    - pgvector
+    - "*"
   monitoring:
     ui:order:
-      - mode
-      - alarms
-      - '*'
+    - mode
+    - alarms
+    - "*"
     alarms:
       ui:order:
-        - cpu_metric_alert
-        - memory_metric_alert
-        - storage_metric_alert
-        - '*'
-      cpu_metric_alert: &monitor_alarm_metric_ui
-        ui:order:
-          - severity
-          - operator
-          - aggregation
-          - frequency
-          - window_size
-          - threshold
-          - '*'
+      - cpu_metric_alert
+      - memory_metric_alert
+      - storage_metric_alert
+      - "*"
+      cpu_metric_alert:
+        ui:order: &3
+        - severity
+        - operator
+        - aggregation
+        - frequency
+        - window_size
+        - threshold
+        - "*"
       memory_metric_alert:
-        <<: *monitor_alarm_metric_ui
+        ui:order: *3
       storage_metric_alert:
-        <<: *monitor_alarm_metric_ui
+        ui:order: *3
