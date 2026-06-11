@@ -1,8 +1,8 @@
 locals {
-  data_infrastructure = {
+  infrastructure = {
     ari = azurerm_postgresql_flexible_server.main.id
   }
-  data_authentication = {
+  authentication = {
     username = azurerm_postgresql_flexible_server.main.administrator_login
     password = azurerm_postgresql_flexible_server.main.administrator_password
     hostname = azurerm_postgresql_flexible_server.main.fqdn
@@ -14,7 +14,7 @@ locals {
     # You can change your application’s database connection configuration to use the same host name,
     # but change the port to 6432 to start using PgBouncer and benefit from improved idle connection scaling.
   }
-  data_security = {
+  security = {
   }
 }
 
@@ -23,11 +23,9 @@ resource "massdriver_artifact" "authentication" {
   name     = "PostgreSQL Server ${var.md_metadata.name_prefix} (${azurerm_postgresql_flexible_server.main.id})"
   artifact = jsonencode(
     {
-      data = {
-        infrastructure = local.data_infrastructure
-        authentication = local.data_authentication
-        security       = local.data_security
-      }
+      infrastructure = local.infrastructure
+      authentication = local.authentication
+      security       = local.security
       specs = {
         rdbms = {
           engine  = "PostgreSQL"
